@@ -61,7 +61,7 @@ func (a *App) fetchChanges() error {
 			return err
 		}
 	} else {
-		log.Print("No stop.sh file found in repository folder")
+		log.Print("No stop.sh file found in repository folder", err)
 	}
 
 	log.Print("Fetching changes")

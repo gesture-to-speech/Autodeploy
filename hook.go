@@ -63,7 +63,6 @@ func NewHookHandler(o *HookOptions) http.Handler {
 		}
 
 		ref := ev.GetRef()
-		log.Printf(ref)
 		branchName := strings.TrimPrefix(ref, "refs/heads/")
 
 		if branchName != o.App.Branch {

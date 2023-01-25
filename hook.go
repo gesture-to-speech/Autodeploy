@@ -64,6 +64,7 @@ func NewHookHandler(o *HookOptions) http.Handler {
 		}
 
 		ref := ev.GetRef()
+		log.Printf(ref)
 		parts := strings.Split(ref, "/")
 		branchName := parts[len(parts)-1]
 

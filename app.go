@@ -55,7 +55,7 @@ func (a *App) fetchChanges() error {
 	_, err := os.Stat(a.RepoFolder + "stop.sh")
 	if os.IsExist(err) {
 		log.Print("Running stop.sh")
-		err = executeCommand(a.RepoFolder, "sh", "stop.sh")
+		err = executeCommand(a.RepoFolder, "sudo", "-E", "sh", "stop.sh")
 		if err != nil {
 			return err
 		}
@@ -84,7 +84,7 @@ func (a *App) fetchChanges() error {
 	_, err = os.Stat(a.RepoFolder + "start.sh")
 	if os.IsExist(err) {
 		log.Print("Running start.sh")
-		err = executeCommand(a.RepoFolder, "sh", "start.sh")
+		err = executeCommand(a.RepoFolder, "sudo", "-E", "sh", "start.sh")
 		if err != nil {
 			return err
 		}

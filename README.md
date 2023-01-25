@@ -11,18 +11,19 @@ do that, go to the repository's page, click `Settings -> Deploy keys (under Secu
 `cat ~/.ssh/id_rsa.pub`, and click `Add key`.
 
 ### Autodeploy setup
-First create a directory where all the files will be stored and enter it. Next download the Autodeploy executable
+First you need to add `github.com` to the list of known hosts. The easiest way to do it is by running 
+`ssh -T git@github.com` and writing `yes` in the prompt. `github.com` should be added to the list of known hosts.
+
+Next, create a directory where all the files will be stored and enter it. Next download the Autodeploy executable
 by running `rm -f Autodeploy && wget --no-cache --no-cookies --no-check-certificate
 https://github.com/gesture-to-speech/Autodeploy/raw/main/bin/Autodeploy -O Autodeploy && sudo chmod -R 0777 Autodeploy`.
 Create `config.tml` based on the `config-template.tml` file. See the explanation of `config.tml` file below.
 
-To start the server run `rm -f nohup.out && sudo nohup ./Autodeploy &`. This will start the server listening to GitHub
+To start the server run `sudo rm -f nohup.out && sudo nohup ./Autodeploy &`. This will start the server listening to GitHub
 webhook in the background. Logs will be located in the file `nohup.out`. To stop the server run
-`kill $(pgrep Autodeploy)`.
+`sudo kill $(pgrep Autodeploy)`.
 
 ### GitHub Setup
-
-
 Next you need to set up webhook. Go to `Webhooks` (under `Code and automation` on the left in `Settings`) and click
 button `Add webhook`. Set `Payload URL` to `<address of VM>:4550/hook` (webhook is listening on port 4550),
 `Content type` to `application/json`, secret to whatever value you want or leave it blank (remember this value as you 

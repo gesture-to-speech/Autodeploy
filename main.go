@@ -36,9 +36,6 @@ func main() {
 	err = app.initRepo()
 	catch(err)
 
-	err = app.fetchChanges()
-	catch(err)
-
 	http.Handle("/hook", NewHookHandler(&HookOptions{
 		App:    app,
 		Secret: key,

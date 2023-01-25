@@ -1,9 +1,6 @@
 package main
 
 import (
-	"crypto/hmac"
-	"crypto/sha1"
-	"encoding/hex"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -31,27 +28,27 @@ func NewHookHandler(o *HookOptions) http.Handler {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
-
-		if o.Secret != "" {
-			ok := false
-			for _, sig := range strings.Fields(r.Header.Get("X-Hub-Signature")) {
-				if !strings.HasPrefix(sig, "sha1=") {
-					continue
+		/*
+			if o.Secret != "" {
+				ok := false
+				for _, sig := range strings.Fields(r.Header.Get("X-Hub-Signature")) {
+					if !strings.HasPrefix(sig, "sha1=") {
+						continue
+					}
+					sig = strings.TrimPrefix(sig, "sha1=")
+					mac := hmac.New(sha1.New, []byte(o.Secret))
+					mac.Write(body)
+					if sig == hex.EncodeToString(mac.Sum(nil)) {
+						ok = true
+						break
+					}
 				}
-				sig = strings.TrimPrefix(sig, "sha1=")
-				mac := hmac.New(sha1.New, []byte(o.Secret))
-				mac.Write(body)
-				if sig == hex.EncodeToString(mac.Sum(nil)) {
-					ok = true
-					break
+				if !ok {
+					log.Printf("Ignoring '%s' event with incorrect signature", evName)
+					return
 				}
 			}
-			if !ok {
-				log.Printf("Ignoring '%s' event with incorrect signature", evName)
-				return
-			}
-		}
-
+		*/
 		ev := github.PushEvent{}
 		err = json.Unmarshal(body, &ev)
 		if err != nil {

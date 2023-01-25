@@ -23,11 +23,10 @@ To start the server run `sudo rm -f nohup.out && sudo nohup ./Autodeploy &`. Thi
 webhook in the background. Logs will be located in the file `nohup.out`. To stop the server run
 `sudo kill $(pgrep Autodeploy)`.
 
-### GitHub Setup
+### GitHub Webhook setup
 Next you need to set up webhook. Go to `Webhooks` (under `Code and automation` on the left in `Settings`) and click
 button `Add webhook`. Set `Payload URL` to `<address of VM>:4550/hook` (webhook is listening on port 4550),
-`Content type` to `application/json`, secret to whatever value you want or leave it blank (remember this value as you 
-will also need to enter it in the `config.tml` file later) - this is used to identify the request, ensure that
+`Content type` to `application/json`, leave secret blank, ensure that
 `Just the push event` and `Active` are set, and click button `Add webhook`.
 
 ## How it works
@@ -49,7 +48,7 @@ In the `app` we define all variables related to the server:
 - mainFolder -> absolute path to which the repo should be cloned, it should end with `/`
 
 In the `hook` we define all variables related to the GitHub hook:
-- key -> secret value that was set during the hook setup
+- key -> secret value that was set during the hook setup - leave it blank
 
 ## Development
 To install all dependencies for development run `sudo bash install.sh` and add `bin` folder to the path

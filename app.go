@@ -52,6 +52,7 @@ func (a *App) initRepo() error {
 }
 
 func (a *App) fetchChanges() error {
+	log.Printf(a.RepoFolder + "stop.sh")
 	_, err := os.Stat(a.RepoFolder + "stop.sh")
 	if os.IsExist(err) {
 		log.Print("Running stop.sh")

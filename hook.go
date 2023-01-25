@@ -2,12 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/google/go-github/github"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
-
-	"github.com/google/go-github/github"
 )
 
 type HookOptions struct {
@@ -65,8 +64,7 @@ func NewHookHandler(o *HookOptions) http.Handler {
 
 		ref := ev.GetRef()
 		log.Printf(ref)
-		parts := strings.Split(ref, "/")
-		branchName := parts[len(parts)-1]
+		branchName := strings.TrimPrefix(ref, "refs/heads/")
 
 		if branchName != o.App.Branch {
 			log.Printf("Ignoring '%s' event with incorrect branch name '%s'", evName, branchName)

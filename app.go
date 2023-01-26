@@ -52,16 +52,15 @@ func (a *App) initRepo() error {
 }
 
 func (a *App) fetchChanges() error {
-	log.Printf(a.RepoFolder + "stop.sh")
 	_, err := os.Stat(a.RepoFolder + "stop.sh")
-	if os.IsExist(err) {
+	if os.IsNotExist(err) {
+		log.Print("No stop.sh file found in repository folder")
+	} else {
 		log.Print("Running stop.sh")
 		err = executeCommand(a.RepoFolder, "sudo", "-E", "sh", "stop.sh")
 		if err != nil {
 			return err
 		}
-	} else {
-		log.Print("No stop.sh file found in repository folder", err)
 	}
 
 	log.Print("Fetching changes")
@@ -83,14 +82,14 @@ func (a *App) fetchChanges() error {
 	log.Print("Finished fetching")
 
 	_, err = os.Stat(a.RepoFolder + "start.sh")
-	if os.IsExist(err) {
+	if os.IsNotExist(err) {
+		log.Print("No start.sh file found in repository folder")
+	} else {
 		log.Print("Running start.sh")
 		err = executeCommand(a.RepoFolder, "sudo", "-E", "sh", "start.sh")
 		if err != nil {
 			return err
 		}
-	} else {
-		log.Print("No start.sh file found in repository folder")
 	}
 
 	return nil

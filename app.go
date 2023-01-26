@@ -33,7 +33,7 @@ func (a *App) initRepo() error {
 	_, err := os.Stat(a.RepoFolder)
 	if !os.IsNotExist(err) {
 		log.Print("Repository already initialized")
-		return nil
+		return a.fetchChanges()
 	}
 
 	log.Print("Initializing repository")

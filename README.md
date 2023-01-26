@@ -7,7 +7,7 @@ You need to create a default SSH key by running `ssh-keygen -t rsa -b 4096`, the
 with the default name `id_rsa`. Click enter again to create a key without a passphrase and click enter again to confirm.
 A random SSH key will be generated. You need to add it in GitHub to the repository you are trying to autodeploy. To
 do that, go to the repository's page, click `Settings -> Deploy keys (under Security on the left)`, and click button
-`Add deploy key`. Set the title to `Autodeploy`, `Key` to the output of this command
+`Add deploy key`. Set the `Title` to `Autodeploy` (or something simillar), set `Key` to the output of this command
 `cat ~/.ssh/id_rsa.pub`, and click `Add key`.
 
 ### Autodeploy setup

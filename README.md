@@ -3,25 +3,25 @@
 ## Run on server
 
 ### Add SSH key for deployment
-You need to create a default SSH key by running `sudo ssh-keygen -t rsa -b 4096`, then click enter to create a key
+You need to create a default SSH key by running `ssh-keygen -t rsa -b 4096`, then click enter to create a key
 with the default name `id_rsa`. Click enter again to create a key without a passphrase and click enter again to confirm.
 A random SSH key will be generated. You need to add it in GitHub to the repository you are trying to autodeploy. To
 do that, go to the repository's page, click `Settings -> Deploy keys (under Security on the left)`, and click button
 `Add deploy key`. Set the title to `Autodeploy`, `Key` to the output of this command
-`cat /root/.ssh/id_rsa.pub`, and click `Add key`.
+`cat ~/.ssh/id_rsa.pub`, and click `Add key`.
 
 ### Autodeploy setup
 First you need to add `github.com` to the list of known hosts. The easiest way to do it is by running 
-`sudo ssh -T git@github.com` and writing `yes` in the prompt. `github.com` should be added to the list of known hosts.
+`ssh -T git@github.com` and writing `yes` in the prompt. `github.com` should be added to the list of known hosts.
 
 Next, create a directory where all the files will be stored and enter it. Next download the Autodeploy executable
 by running `rm -f Autodeploy && wget --no-cache --no-cookies --no-check-certificate
 https://github.com/gesture-to-speech/Autodeploy/raw/main/bin/Autodeploy -O Autodeploy && sudo chmod -R 0777 Autodeploy`.
 Create `config.tml` based on the `config-template.tml` file. See the explanation of `config.tml` file below.
 
-To start the server run `sudo rm -f nohup.out && sudo nohup ./Autodeploy &`. This will start the server listening to GitHub
+To start the server run `rm -f nohup.out && nohup ./Autodeploy &`. This will start the server listening to GitHub
 webhook in the background. Logs will be located in the file `nohup.out`. To stop the server run
-`sudo kill -9 $(pgrep Autodeploy)`.
+`kill $(pgrep Autodeploy)`.
 
 ### GitHub Webhook setup
 Next you need to set up webhook. Go to `Webhooks` (under `Code and automation` on the left in `Settings`) and click

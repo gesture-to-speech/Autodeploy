@@ -56,8 +56,8 @@ func (a *App) fetchChanges() error {
 	if os.IsNotExist(err) {
 		log.Print("No stop.sh file found in repository folder")
 	} else {
-		log.Print("Running stop.sh")
-		err = executeCommand(a.RepoFolder, "sudo", "-E", "sh", "stop.sh")
+		log.Printf("Running stop.sh in repo %s", a.RepoFolder)
+		err = executeCommand(a.RepoFolder, "sudo", "-E", "./stop.sh")
 		if err != nil {
 			return err
 		}
@@ -85,8 +85,8 @@ func (a *App) fetchChanges() error {
 	if os.IsNotExist(err) {
 		log.Print("No start.sh file found in repository folder")
 	} else {
-		log.Print("Running start.sh")
-		err = executeCommand(a.RepoFolder, "sudo", "-E", "sh", "start.sh")
+		log.Printf("Running start.sh in repo %s", a.RepoFolder)
+		err = executeCommand(a.RepoFolder, "sudo", "-E", "./start.sh")
 		if err != nil {
 			return err
 		}

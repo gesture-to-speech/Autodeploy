@@ -32,7 +32,7 @@ func NewApp(repo string, branch string, mainFolder string) *App {
 func (a *App) initRepo() error {
 	_, err := os.Stat(a.RepoFolder)
 	if !os.IsNotExist(err) {
-		log.Print("Repository already initialized")
+		log.Print("Repository already initialized, fetching new changes")
 		return a.fetchChanges()
 	}
 

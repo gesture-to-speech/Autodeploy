@@ -23,6 +23,8 @@ To start the server run `rm -f nohup.out && nohup ./Autodeploy &`. This will sta
 webhook in the background. Logs will be located in the file `nohup.out`. To stop the server run
 `kill $(pgrep Autodeploy)`.
 
+The sever, after start, will just clone the repository, so you can make any necessary changes to the files before starting any process. If any change push event from GitHub will come, the stopping and starting of processes will happen automatically.
+
 ### GitHub Webhook setup
 Next you need to set up webhook. Go to `Webhooks` (under `Code and automation` on the left in `Settings`) and click
 button `Add webhook`. Set `Payload URL` to `<address of VM>:4550/hook` (webhook is listening on port 4550),

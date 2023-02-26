@@ -76,5 +76,7 @@ func NewHookHandler(o *HookOptions) http.Handler {
 		if err != nil {
 			return
 		}
+
+		w.WriteHeader(http.StatusOK)
 	})
 }

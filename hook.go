@@ -16,6 +16,8 @@ type HookOptions struct {
 
 func NewHookHandler(o *HookOptions) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+
 		evName := r.Header.Get("X-Github-Event")
 		if evName != "push" {
 			log.Printf("Ignoring '%s' event", evName)
@@ -58,7 +60,6 @@ func NewHookHandler(o *HookOptions) http.Handler {
 
 		if ev.Repo.FullName == nil || *ev.Repo.SSHURL != o.App.Repo {
 			log.Printf("Ignoring '%s' event with incorrect repository name '%s'", evName, *ev.Repo.SSHURL)
-			http.Error(w, "Bad Request", http.StatusBadRequest)
 			return
 		}
 
@@ -67,16 +68,10 @@ func NewHookHandler(o *HookOptions) http.Handler {
 
 		if branchName != o.App.Branch {
 			log.Printf("Ignoring '%s' event with incorrect branch name '%s'", evName, branchName)
-			http.Error(w, "Bad Request", http.StatusBadRequest)
 			return
 		}
 		log.Printf("Handling '%s' event for %s", evName, o.App.Repo)
 
 		err = o.App.fetchChanges()
-		if err != nil {
-			return
-		}
-
-		w.WriteHeader(http.StatusOK)
 	})
 }

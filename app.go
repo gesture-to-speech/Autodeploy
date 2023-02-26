@@ -30,8 +30,8 @@ func NewApp(repo string, branch string, mainFolder string) *App {
 }
 
 func (a *App) initRepo() error {
-	log.Print("Making the directory safe")
-	err := executeCommand(a.MainFolder, "git", "config", "--add", "safe.directory", "'*'")
+	log.Printf("Making the directory %s safe", a.RepoFolder)
+	err := executeCommand(a.MainFolder, "git", "config", "--global", "--add", "safe.directory", a.RepoFolder)
 
 	_, err = os.Stat(a.RepoFolder)
 	if !os.IsNotExist(err) {

@@ -59,10 +59,16 @@ func (a *App) fetchChanges() error {
 	if os.IsNotExist(err) {
 		log.Printf("No stop.sh file found in repository folder %s", a.RepoFolder)
 	} else {
-		log.Printf("Running stop.sh in repo %s", a.RepoFolder)
-		err = executeCommand(a.RepoFolder, "sudo", "-E", "./stop.sh")
+		log.Printf("Make stop.sh executable")
+		err = executeCommand(a.RepoFolder, "chmod", "+x", "stop.sh")
 		if err != nil {
-			return err
+			log.Printf("an error occurred while trying to make stop.sh executable; %s", err)
+		} else {
+			log.Printf("Running stop.sh in repo %s", a.RepoFolder)
+			err = executeCommand(a.RepoFolder, "sudo", "-E", "./stop.sh")
+			if err != nil {
+				log.Printf("an error occurred while running stop.sh; %s", err)
+			}
 		}
 	}
 
@@ -93,10 +99,16 @@ func (a *App) fetchChanges() error {
 	if os.IsNotExist(err) {
 		log.Printf("No start.sh file found in repository folder %s", a.RepoFolder)
 	} else {
-		log.Printf("Running start.sh in repo %s", a.RepoFolder)
-		err = executeCommand(a.RepoFolder, "sudo", "-E", "./start.sh")
+		log.Printf("Make start.sh executable")
+		err = executeCommand(a.RepoFolder, "chmod", "+x", "start.sh")
 		if err != nil {
-			return err
+			log.Printf("an error occurred while trying to make start.sh executable; %s", err)
+		} else {
+			log.Printf("Running start.sh in repo %s", a.RepoFolder)
+			err = executeCommand(a.RepoFolder, "sudo", "-E", "./start.sh")
+			if err != nil {
+				log.Printf("an error occurred while running start.sh; %s", err)
+			}
 		}
 	}
 

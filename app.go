@@ -119,6 +119,8 @@ func (a *App) fetchChanges() error {
 		}
 	}
 
+	log.Print("Finished fetching changes\n\n--------------\n\n")
+
 	return nil
 }
 

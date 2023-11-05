@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"log"
 	"os"
 	"os/exec"
@@ -116,12 +117,17 @@ func (a *App) fetchChanges() error {
 }
 
 func executeCommand(dir string, commandName string, arg ...string) error {
+	var stdoutBuf bytes.Buffer
+
 	cmd := exec.Command(commandName, arg...)
 	if dir != "" {
 		cmd.Dir = dir
 	}
+	cmd.Stdout = &stdoutBuf
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
+	log.Printf("stdout: %s\n", stdoutBuf.String())
+
 	if err != nil {
 		return err
 	}

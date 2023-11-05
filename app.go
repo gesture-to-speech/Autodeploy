@@ -79,6 +79,12 @@ func (a *App) fetchChanges() error {
 		return err
 	}
 
+	log.Print("Make sure that git always rebases")
+	err = executeCommand(a.RepoFolder, "git", "config", "--global", "pull.rebase", "true")
+	if err != nil {
+		return err
+	}
+
 	log.Print("Fetch new changes")
 	err = executeCommand(a.RepoFolder, "git", "fetch", "origin")
 	if err != nil {
